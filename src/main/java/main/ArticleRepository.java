@@ -1,28 +1,28 @@
 package main;
 
 import java.util.ArrayList;
-
+/* 이름 및 조회수 추가 */
 public class ArticleRepository {
     private ArrayList<Article> articles = new ArrayList<>();
 
     private int articleId = 4;
     public void makeTestDate(){ //등록일 추가
-        Article test1 = new Article(1, "제목1","내용1", Util.getCurrentDate());
-        Article test2 = new Article(2, "제목2","내용2", Util.getCurrentDate());
-        Article test3 = new Article(3, "제목3","내용3", Util.getCurrentDate());
+        Article test1 = new Article(1, "제목1","내용1", Util.getCurrentDate(),"사람1", 20);
+        Article test2 = new Article(2, "제목2","내용2", Util.getCurrentDate(), "사람2", 10);
+        Article test3 = new Article(3, "제목3","내용3", Util.getCurrentDate(), "사람3", 50);
 
         articles.add(test1);
         articles.add(test2);
         articles.add(test3);
     }
      
-    public void addArticle(String title, String body){//등록일 추가
-        Article article = new Article(articleId, title, body, Util.getCurrentDate());
+    public void addArticle(String title, String body){
+        Article article = new Article(articleId, title, body, Util.getCurrentDate(), "익명", 70);
         articles.add(article);
         articleId++;
     }
 
-    /* id와 for문에서의 i와 일치하는 경우에만 articles return */
+
     public Article getAtileOne(int id){
         for(int i = 0 ; i < articles.size(); i++){
             if(articles.get(i).getId() == id){
@@ -51,10 +51,13 @@ public class ArticleRepository {
     public void updateArticle(Article article, String title, String body){
         article.setTitle(title);
         article.setBody(body);
-    }// update : 수정할 게시물, 수정된 제목, 수정된 내용
+    }
 
     public void deleteArticle(Article article){
         articles.remove(article);
-        // 삭제(remove)
+     
     }
+    public void increaseReadCnt(Article article){
+        article.setHit(article.getHit()+1);
+    }// 조회수 증가
 }

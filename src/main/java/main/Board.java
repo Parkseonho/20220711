@@ -63,6 +63,7 @@ public class Board {
         if(article == null){
             System.out.println("없는 게시물입니다.");
         }else{
+            articleRepository.increaseReadCnt(article); //게시물을 조회할때 조회수 상승하게함
             articleView.printArtileDetail(article);
 
         }
