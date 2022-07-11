@@ -1,63 +1,85 @@
 package main;
-
 import java.util.ArrayList;
-/* 이름 및 조회수 추가 */
 public class ArticleRepository {
+
     private ArrayList<Article> articles = new ArrayList<>();
-
     private int articleId = 4;
-    public void makeTestDate(){ //등록일 추가
-        Article test1 = new Article(1, "제목1","내용1", Util.getCurrentDate(),"사람1", 20);
-        Article test2 = new Article(2, "제목2","내용2", Util.getCurrentDate(), "사람2", 10);
-        Article test3 = new Article(3, "제목3","내용3", Util.getCurrentDate(), "사람3", 50);
+    private ArrayList<Member> members = new ArrayList<>();
 
-        articles.add(test1);
-        articles.add(test2);
-        articles.add(test3);
+    private int memberId = 1;
+
+    public void makeTestData() {
+
+        Article a1 = new Article(1, "제목1", "내용1", "홍길동", Util.getCurrentDate(), 20);
+        Article a2 = new Article(2, "제목2", "내용2", "이순신", Util.getCurrentDate(), 10);
+        Article a3 = new Article(3, "제목3", "내용3", "황진이", Util.getCurrentDate(), 30);
+
+        articles.add(a1);
+        articles.add(a2);
+        articles.add(a3);
+
     }
-     
-    public void addArticle(String title, String body){
-        Article article = new Article(articleId, title, body, Util.getCurrentDate(), "익명", 70);
+
+
+    public void addArticle(String title, String body) {
+
+        Article article = new Article(articleId, title, body, "익명", Util.getCurrentDate(), 0);
         articles.add(article);
         articleId++;
     }
 
 
-    public Article getAtileOne(int id){
-        for(int i = 0 ; i < articles.size(); i++){
-            if(articles.get(i).getId() == id){
+    public Article getArticleOne(int id) {
+
+
+        for(int i = 0; i < articles.size(); i++) {
+            if(articles.get(i).getId() == id) {
                 return articles.get(i);
             }
         }
+
+
         return null;
     }
 
-    public ArrayList<Article> getSearchArticleList(String keyword){
+    public ArrayList<Article> getSearchedArticleList(String keyword) {
 
-        ArrayList<Article> searchArticleList = new ArrayList<>();
+        ArrayList<Article> searchedArticleList = new ArrayList<>();
 
-        for(int i = 0; i < articles.size(); i++){
-            if(articles.get(i).getTitle().contains(keyword)){
-                searchArticleList.add(articles.get(i));
+        for(int i = 0; i < articles.size(); i++) {
+            if(articles.get(i).getTitle().contains(keyword)) {
+                searchedArticleList.add(articles.get(i));
             }
         }
-        return searchArticleList;
+
+        return searchedArticleList;
     }
 
-    public ArrayList<Article> getArticles(){
+    public ArrayList<Article> getArticles() {
         return this.articles;
     }
 
-    public void updateArticle(Article article, String title, String body){
+    public ArrayList<Member> getMembers() {
+        return this.members;
+    }
+
+
+    public void updateArticle(Article article, String title, String body) {
         article.setTitle(title);
         article.setBody(body);
     }
 
-    public void deleteArticle(Article article){
+
+    public void deleteArticle(Article article) {
         articles.remove(article);
-     
     }
-    public void increaseReadCnt(Article article){
-        article.setHit(article.getHit()+1);
-    }// 조회수 증가
+    public void increaseReadCnt(Article article) {
+        article.setHit(article.getHit() + 1);
+    }
+    /* 회원가입자 추가 */
+    public void addMember(String loginId, String loginPw, String nickname) {
+        Member member = new Member(loginId, loginPw, nickname);
+        members.add(member);
+        memberId++;
+    }
 }

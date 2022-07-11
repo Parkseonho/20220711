@@ -1,112 +1,132 @@
 package main;
-
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class Board {
-    
+    ArticleRepository repo = new ArticleRepository();
+    ArticleView articleView = new ArticleView();
 
-     ArticleView articleView = new ArticleView();
-     ArticleRepository articleRepository = new ArticleRepository();
-    Scanner in = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
 
-    public void run(){
+    public void run() {
+        repo.makeTestData();
 
-        articleRepository.makeTestDate();
-
-        while(true) {
-            System.out.print(">> ");
-            String cmd = in.nextLine();
-
+        while (true) {
+            System.out.print(">>  ");
+            String cmd = sc.nextLine();
             if (cmd.equals("help")) {
                 articleView.printHelp();
-            } else if (cmd.equals("exit")) {
-                System.out.println("프로그램 종료");
-                break;
             } else if (cmd.equals("add")) {
                 addArticle();
+
             } else if (cmd.equals("list")) {
-                articleView.printArticle(articleRepository.getArticles());
+                articleView.printArticles(repo.getArticles());
             } else if (cmd.equals("update")) {
                 updateArticle();
-                articleView.printArticle(articleRepository.getArticles());
-            }else if(cmd.equals("search")){
-                searchArticle();
-            } else if (cmd.equals("detail")) { // 상세보기
-                readDetailArticle();
-            } else if (cmd.equals("delete")) {
+                articleView.printArticles(repo.getArticles());
+
+            } else if(cmd.equals("search")) {
+                searchArticles();
+
+            } else if(cmd.equals("read")) {
+                readArticle();
+
+            } else if(cmd.equals("delete")) {
                 deleteArticle();
+
+            } else if(cmd.equals("signup")) {
+                signup();
+
+            } else if(cmd.equals("mlist")) {//회원가입된 회원있으면 가입자 명단 보여주기
+                articleView.printMembers(repo.getMembers());
+
+            } else if (cmd.equals("exit")) {
+                System.out.println("프로그램을 종료합니다.");
+                break;
             } else {
-                System.out.println("알 수 없는 명령어");
+                System.out.println("알 수 없는 명령어입니다.");
             }
-
         }
     }
 
-    /* 게시물 삭제 관련 메서드 */
+    private void signup() {
+        System.out.print("아이디 :");
+        String loginId = sc.nextLine();
+
+        System.out.print("비밀번호 :");
+        String loginPw = sc.nextLine();
+
+        System.out.print("이름 :");
+        String nickname = sc.nextLine();
+
+        repo.addMember(loginId, loginPw, nickname);
+        System.out.println("회원가입이 완료되었습니다.");
+    }
+
     private void deleteArticle() {
-        System.out.print("삭제할 게시물 번호 : ");
-        int targetId = Integer.parseInt(in.nextLine());
+        System.out.print("삭제 할 게시물 번호 : ");
+        int targetId = Integer.parseInt(sc.nextLine());
 
-        Article article = articleRepository.getAtileOne(targetId);
-        articleRepository.deleteArticle(article);
+        Article article = repo.getArticleOne(targetId);
+        repo.deleteArticle(article);
 
-        System.out.println("삭제 완료");
+        System.out.println("삭제가 완료되었습니다.");
+
     }
+    private void readArticle() {
 
-    private void readDetailArticle() {
         System.out.print("상세보기 할 게시물 번호 : ");
-        int targetId = Integer.parseInt(in.nextLine());
+        int targetId = Integer.parseInt(sc.nextLine());
 
-        Article article = articleRepository.getAtileOne(targetId);
+        Article article = repo.getArticleOne(targetId);
 
-        if(article == null){
+        if(article == null) {
             System.out.println("없는 게시물입니다.");
-        }else{
-            articleRepository.increaseReadCnt(article); //게시물을 조회할때 조회수 상승하게함
-            articleView.printArtileDetail(article);
 
+        } else {
+            repo.increaseReadCnt(article);
+            articleView.printArticleDetail(article);
         }
     }
 
-    private void searchArticle(){
-        System.out.print("검색 키워드 : ");
-        String keyword = in.nextLine();
+    private void searchArticles() {
 
-        ArrayList<Article> searchedList = articleRepository.getSearchArticleList(keyword);
+        System.out.print("검색 키워드를 입력해주세요 : ");
+        String keyword = sc.nextLine();
 
-        articleView.printArticle(searchedList);
+        ArrayList<Article> searchedList = repo.getSearchedArticleList(keyword);
+        articleView.printArticles(searchedList);
+
     }
 
-    private void updateArticle() {
+    public void updateArticle() {
+        // CRUD
         System.out.print("수정할 게시물 번호 : ");
-        int targetId = Integer.parseInt(in.nextLine());
+        int targetId = Integer.parseInt(sc.nextLine());
 
-        Article article = articleRepository.getAtileOne(targetId);
-        if(article == null){
+        Article article = repo.getArticleOne(targetId);
+        if(article == null) {
             System.out.println("없는 게시물입니다.");
-        }else {
-            System.out.print("제목 : ");
-            String title = in.nextLine();
+        } else {
+            System.out.print("새제목 : ");
+            String title = sc.nextLine();
+            System.out.print("새내용 : ");
+            String body = sc.nextLine();
 
+            repo.updateArticle(article, title, body);
 
-            System.out.print("내용 : ");
-            String body = in.nextLine();
-
-            articleRepository.updateArticle(article, title, body);
-
-            System.out.println("수정 완료");
+            System.out.println("수정이 완료되었습니다.");
         }
+
     }
-    private void addArticle() {
-        System.out.print("제목 : ");
-        String title = in.nextLine();
+    public void addArticle() {
+        System.out.print("제목 :");
+        String title = sc.nextLine();
+        System.out.print("내용 :");
+        String body = sc.nextLine();
 
-        System.out.print("내용 : ");
-        String body = in.nextLine();
-
-        articleRepository.addArticle(title, body);
-
-        System.out.println("게시물 입력 완료");
+        repo.addArticle(title, body);
+        System.out.println("게시물이 저장되었습니다.");
     }
+
+
 }
