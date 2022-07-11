@@ -6,16 +6,18 @@ import java.util.Scanner;
 
 
 public class Board {
-    /* Article이라는 새로운 java를 만들어 ArrayList에 추가 */
     ArrayList<Article> articles = new ArrayList<>();
     Scanner in = new Scanner(System.in);
 
     public void run(){
+
+        /* test date를 제작하여 여러개의 list를 확인해보자 */
+        makeTestDate();
+
         while(true) {
             System.out.print(">> ");
             String cmd = in.nextLine();
 
-            /* if문이 실행될때 나오는 것들도 메서드를 통해 구조화함 */
             if (cmd.equals("help")) {
                 printHelp();
             } else if (cmd.equals("exit")) {
@@ -32,6 +34,18 @@ public class Board {
             }
 
         }
+    }
+
+    /* test date 제작 후 articles ArrayList에 추가 */
+    private void makeTestDate() {
+        Article test1 = new Article("제목1","내용1");
+        Article test2 = new Article("제목2","내용2");
+        Article test3 = new Article("제목3","내용3");
+
+        articles.add(test1);
+        articles.add(test2);
+        articles.add(test3);
+
     }
 
     private void updateArticle() {
@@ -51,7 +65,7 @@ public class Board {
         System.out.print("내용 : ");
         String body = in.nextLine();
 
-        Article article = new Article(title, body); // Article이라는 새로운 객체?에 인자값을 넣어준다.
+        Article article = new Article(title, body);
         articles.set(index, article);
 
         System.out.println("수정 완료");
@@ -87,8 +101,9 @@ public class Board {
         for (int i = 0; i < articles.size(); i++) {
             Article article = articles.get(i);
 
-            System.out.printf("번호 : %d\n", i + 1);// i가 0부터 시작하기에 '+1'이 필요
+            System.out.printf("번호 : %d\n", i + 1);
             System.out.printf("제목 : %s\n", article.title);
+            System.out.printf("내용 : %s\n", article.body);
             System.out.println("====================");
         }
     }
