@@ -1,16 +1,26 @@
 package main;
-/* 삭제를 위해 id 변수 추가 및 id관련 메소드 추가 */
+/* 날짜 추가 위해 변수 및 메서드 추가 */
 
 public class Article {
 
     private int id;
     private String title;
     private String body;
+    private String regDate;
 
-    public Article(int id, String title, String body){
+    public Article(int id, String title, String body, String regDate){
         this.id = id;
         this.title = title;
         this.body = body;
+        this.regDate = regDate;
+    }
+
+    public String getRegDate(){
+        return regDate;
+    }
+
+    public void setRegDate(String regDate){
+        this.regDate = regDate;
     }
 
     public int getId(){

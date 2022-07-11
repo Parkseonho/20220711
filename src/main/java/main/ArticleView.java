@@ -1,7 +1,7 @@
 package main;
 
 import java.util.ArrayList;
-/* 번호 수동 -> 자동 변환(id 활용) */
+
 public class ArticleView {
     public void printArticle(ArrayList<Article> articles){
         for (int i = 0; i < articles.size(); i++) {
@@ -9,6 +9,7 @@ public class ArticleView {
 
             System.out.printf("번호 : %d\n", article.getId());
             System.out.printf("제목 : %s\n", article.getTitle());
+            System.out.printf("등록일 : %s\n", article.getRegDate());
             System.out.println("====================");
         }
     }
@@ -17,6 +18,7 @@ public class ArticleView {
         System.out.printf("==%d번 게시물==\n", article.getId());
         System.out.printf("번호 : %d\n", article.getId());
         System.out.printf("제목 : %s\n", article.getTitle());
+        System.out.printf("등록일 : %s\n", article.getRegDate());
         System.out.println("------------------------------");
         System.out.printf("내용 : %s\n", article.getBody());
         System.out.println("------------------------------");

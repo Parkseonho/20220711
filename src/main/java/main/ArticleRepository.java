@@ -5,22 +5,19 @@ import java.util.ArrayList;
 public class ArticleRepository {
     private ArrayList<Article> articles = new ArrayList<>();
 
-    private int articleId = 4; //testdate에서 번호를3까지 사용, 4부터 시작(add~ 에서 ++해줌)
-    public void makeTestDate(){
-        Article test1 = new Article(1, "제목1","내용1");
-        Article test2 = new Article(2, "제목2","내용2");
-        Article test3 = new Article(3, "제목3","내용3");
+    private int articleId = 4;
+    public void makeTestDate(){ //등록일 추가
+        Article test1 = new Article(1, "제목1","내용1", Util.getCurrentDate());
+        Article test2 = new Article(2, "제목2","내용2", Util.getCurrentDate());
+        Article test3 = new Article(3, "제목3","내용3", Util.getCurrentDate());
 
         articles.add(test1);
         articles.add(test2);
         articles.add(test3);
     }
-    /* 
-    본래 article에 title과 body만 들어가서 Article article로해도 괜찮았지만, 
-    id가 추가됨에 따라 각각입력해야함
-      */
-    public void addArticle(String title, String body){
-        Article article = new Article(articleId, title, body);
+     
+    public void addArticle(String title, String body){//등록일 추가
+        Article article = new Article(articleId, title, body, Util.getCurrentDate());
         articles.add(article);
         articleId++;
     }

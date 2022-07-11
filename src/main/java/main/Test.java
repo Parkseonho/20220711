@@ -1,11 +1,16 @@
 package main;
 
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /* contains test */
 public class Test {
     public static void main(String[] args) {
-        String str1 = "안녕하세요";
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        String formatedNow = now.format(formatter);
 
-        System.out.println(str1.contains("안녕"));
+        System.out.println(formatedNow);
     }
 }
