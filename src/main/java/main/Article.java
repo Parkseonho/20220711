@@ -1,18 +1,25 @@
 package main;
+/* 삭제를 위해 id 변수 추가 및 id관련 메소드 추가 */
 
-/*
-title과 body를 private로 바꾸면서 
-다른 public을 제작하여 세부항목별로 가져갈수 있게됨
- */
 public class Article {
+
+    private int id;
     private String title;
     private String body;
 
-    public Article(String title, String body){
+    public Article(int id, String title, String body){
+        this.id = id;
         this.title = title;
         this.body = body;
     }
 
+    public int getId(){
+        return id;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
+    
     public String getTitle(){
         return title;
     }
